@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="data.json">
+</head>
+<body>
+  <div class=" balance">
+    <p>My balance</p>
+    <figure>
+        <img src="images/logo.svg" alt="">
+    </figure>
+    <strong>929.8</strong>
+  </div>
+  <div class="spending">
+    <h1> spending-last 7 days</h1>
+    <div class="graph">
+        <div class="seg">
+            <div class="rect">
+
+            </div>
+            <p>Seg</p>
+        </div>
+        <div class="terç">
+            <div class="rect">
+
+            </div>
+            <p>Ter</p>
+        </div>
+        <div class="quart">
+            <div class="rect">
+
+            </div>
+            <p>Quar</p>
+        </div>
+        <div class="quin">
+            <div class="rect">
+
+            </div>
+            <p>Quint</p>
+        </div>
+        <div class="sext">
+            <div class="rect">
+
+            </div>
+            <p>Sext</p>
+        </div>
+        <div class="sab">
+            <div class="rect">
+
+            </div>
+            <p>Sab</p>
+        </div>
+        <div class="dom">
+            <div class="rect">
+
+            </div>
+            <p>Dom</p>
+        </div>
+    </div>
+    <hr><div class="total">
+        <div><p>total this month</p>
+        <p><strong>$498.33</strong></p></div>
+
+    </div>
+    <div><p dir="rtl"><strong>2.4%+</strong></p>
+    <p><strong>From last month</strong></p></div>
+  </div>
+ 
+</body>
+<script>
+    let days=["dom","seg","terç","quart","quin","sext","sab"];
+   let daysRect=document.querySelectorAll(".graph>div>div.rect") ;
+   console.log(daysRect);
+   let date=new Date();
+   let daysNum=date.getDay();
+   let currentDay=days[daysNum];
+   console.log(currentDay);
+   let currentDayRect=document.querySelector(`.${currentDay}>div.rect`);
+   currentDayRect.style.backgroundColor="#3F612D";
+   let amounts=[];
+   async function getData(){
+    let response=await fetch("/data.json");
+    let data=await response.json();
+    for(let i=0;i<data.length;i++){
+        amounts[i]=data[i].amount;
+    }
+    daysRect.forEach((day,i)=>{
+day.style.height=`${amounts[i]*2.5}px`
+    })
+   }
+   getData();
+
+
+
+
+
+
+</script>
+</html>
